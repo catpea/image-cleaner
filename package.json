@@ -1,6 +1,6 @@
 {
   "name": "image-cleaner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Professional web-based image editor for pixel art and UI graphics. Smart multi-marker selection with boolean operations, global color range selection, Gaussian blur, transparency tools. Perfect for preparing Midjourney pixel art for 9-slice scaling. Pure vanilla JavaScript with zero framework dependencies.",
   "main": "index.js",
   "type": "module",
@@ -49,7 +49,6 @@
     "USAGE.md",
     "example.png"
   ],
-
   "dependencies": {
     "panner-zoomer": "^1.0.2"
   },
