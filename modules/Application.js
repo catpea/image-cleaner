@@ -24,7 +24,6 @@ export class Application extends EventEmitter {
     this.pannerZoomer = null;
     this.overlayCanvas = null;
     this.overlayCtx = null;
-    this.alwaysEnablePanZoom = false; // Config: keep panner-zoomer always active
 
     // Signals
     const [getImageLoaded, setImageLoaded] = createSignal(false);
@@ -37,6 +36,7 @@ export class Application extends EventEmitter {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.undo = this.undo.bind(this);
     this.redo = this.redo.bind(this);
+    this.jumpTo = this.jumpTo.bind(this);
   }
 
   /**
@@ -59,20 +59,12 @@ export class Application extends EventEmitter {
       history: config.history,
     });
 
-    // Set panner-zoomer reference and configuration
+    // Set panner-zoomer reference and enable it
     if (config.pannerZoomer) {
       this.pannerZoomer = config.pannerZoomer;
-    }
-
-    // Set alwaysEnablePanZoom flag
-    if (config.alwaysEnablePanZoom !== undefined) {
-      this.alwaysEnablePanZoom = config.alwaysEnablePanZoom;
-    }
-
-    // If alwaysEnablePanZoom is true, enable panner-zoomer now
-    if (this.alwaysEnablePanZoom && this.pannerZoomer) {
+      // Panner-zoomer is always enabled, responds to middle mouse button for panning
       this.pannerZoomer.enable();
-      console.log('Panner-zoomer always enabled mode activated');
+      console.log('Panner-zoomer enabled (middle button for panning)');
     }
 
     // Setup event listeners
@@ -160,7 +152,7 @@ export class Application extends EventEmitter {
       this.emit('imageLoaded', dims);
 
       // Update UI
-      this.uiManager.updateHistoryPanel(this.historyManager.getHistory());
+      this.uiManager.updateHistoryPanel(this.historyManager.getHistory(), this.jumpTo);
       this.uiManager.updateHistoryButtons(
         this.historyManager.canUndo(),
         this.historyManager.canRedo()
@@ -191,15 +183,19 @@ export class Application extends EventEmitter {
     });
 
     this.historyManager.on('push', () => {
-      this.uiManager.updateHistoryPanel(this.historyManager.getHistory());
+      this.uiManager.updateHistoryPanel(this.historyManager.getHistory(), this.jumpTo);
     });
 
     this.historyManager.on('undo', () => {
-      this.uiManager.updateHistoryPanel(this.historyManager.getHistory());
+      this.uiManager.updateHistoryPanel(this.historyManager.getHistory(), this.jumpTo);
     });
 
     this.historyManager.on('redo', () => {
-      this.uiManager.updateHistoryPanel(this.historyManager.getHistory());
+      this.uiManager.updateHistoryPanel(this.historyManager.getHistory(), this.jumpTo);
+    });
+
+    this.historyManager.on('jumpTo', () => {
+      this.uiManager.updateHistoryPanel(this.historyManager.getHistory(), this.jumpTo);
     });
 
     // Canvas update events
@@ -365,6 +361,18 @@ export class Application extends EventEmitter {
     if (imageData) {
       this.canvasManager.putImageData(imageData);
       this.uiManager.showNotification('Redo', 'info');
+    }
+  }
+
+  /**
+   * Jump to a specific state in history
+   * @param {number} index - History index to jump to
+   */
+  jumpTo(index) {
+    const imageData = this.historyManager.jumpTo(index);
+    if (imageData) {
+      this.canvasManager.putImageData(imageData);
+      this.uiManager.showNotification('Jumped to history state', 'info');
     }
   }
 

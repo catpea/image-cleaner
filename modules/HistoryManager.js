@@ -118,14 +118,40 @@ export class HistoryManager extends EventEmitter {
   }
 
   /**
+   * Jump to a specific state in history
+   * @param {number} index - The index to jump to
+   * @returns {ImageData|null} ImageData at that index or null if invalid
+   */
+  jumpTo(index) {
+    if (index < 0 || index >= this.states.length) {
+      console.warn('Invalid history index:', index);
+      return null;
+    }
+
+    this.currentIndex = index;
+    const state = this.states[this.currentIndex];
+
+    this.emit('jumpTo', { description: state.description, index: this.currentIndex });
+    this.emit('change', { canUndo: this.canUndo(), canRedo: this.canRedo() });
+
+    // Return a copy
+    return new ImageData(
+      new Uint8ClampedArray(state.data.data),
+      state.data.width,
+      state.data.height
+    );
+  }
+
+  /**
    * Get history as array of descriptions
-   * @returns {Array<{description: string, timestamp: number, isCurrent: boolean}>}
+   * @returns {Array<{description: string, timestamp: number, isCurrent: boolean, index: number}>}
    */
   getHistory() {
     return this.states.map((state, index) => ({
       description: state.description || 'Unnamed operation',
       timestamp: state.timestamp,
       isCurrent: index === this.currentIndex,
+      index: index,
     }));
   }
 

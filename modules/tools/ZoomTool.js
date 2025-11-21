@@ -10,36 +10,24 @@ export class ZoomTool extends Tool {
   }
 
   getDescription() {
-    return `ZOOM TOOL - Pan and zoom navigation
+    return `ZOOM TOOL - Pan and zoom controls
 
-When this tool is active, you can navigate the canvas:
-• DRAG with mouse to pan (move the view around)
+Pan and zoom are always available:
+• MIDDLE MOUSE BUTTON (press wheel) + DRAG to pan (move the view around)
 • SCROLL WHEEL to zoom in/out
 • Zoom is centered on your mouse cursor position
 
-Use this tool to get a detailed view of your pixel art, then switch to other tools to make edits. The zoom and pan state is preserved when switching tools.`;
+This tool provides convenient buttons to reset view, zoom in, and zoom out. The zoom and pan state is preserved when switching tools. Pan with middle mouse button works with any tool active.`;
   }
 
   activate() {
     super.activate();
-
-    // Enable panner-zoomer (unless always enabled mode is on)
-    if (this.app.pannerZoomer && !this.app.alwaysEnablePanZoom) {
-      this.app.pannerZoomer.enable();
-      console.log('Zoom tool activated - Pan with mouse drag, zoom with mouse wheel');
-    }
-
+    console.log('Zoom tool activated - Use middle mouse button to pan, scroll wheel to zoom');
     this.emit('activated');
   }
 
   deactivate() {
     super.deactivate();
-
-    // Disable panner-zoomer (unless always enabled mode is on)
-    if (this.app.pannerZoomer && !this.app.alwaysEnablePanZoom) {
-      this.app.pannerZoomer.disable();
-    }
-
     this.emit('deactivated');
   }
 

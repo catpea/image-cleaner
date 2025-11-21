@@ -10,6 +10,7 @@ import 'panner-zoomer';
 import { Application } from './modules/Application.js';
 import { ZoomTool } from './modules/tools/ZoomTool.js';
 import { SelectTool } from './modules/tools/SelectTool.js';
+import { PenTool } from './modules/tools/PenTool.js';
 import { BlurTool } from './modules/tools/BlurTool.js';
 import { ClearTool } from './modules/tools/ClearTool.js';
 import { ExportTool } from './modules/tools/ExportTool.js';
@@ -36,14 +37,7 @@ await customElements.whenDefined('panner-zoomer');
 // Initialize panner-zoomer
 pz.setPanOnContent(true);
 pz.setManageCursor(false); // Don't manage cursor - let tools control cursor
-
-// Configuration: Set to true to always enable pan/zoom and hide Zoom tool
-const alwaysEnablePanZoom = true;
-
-// If not always enabled, disable by default (will be enabled by ZoomTool)
-if (!alwaysEnablePanZoom) {
-  pz.disable();
-}
+pz.setPanButtons([1]); // Only middle mouse button triggers panning
 
 // Initialize application
 await app.initialize({
@@ -54,7 +48,6 @@ await app.initialize({
   history: historyContainer,
   pannerZoomer: pz,
   initialImage: 'example.png',
-  alwaysEnablePanZoom: alwaysEnablePanZoom,
 });
 
 // -----------------------------------------------------------------
@@ -63,23 +56,16 @@ await app.initialize({
 
 app.registerTool(new ZoomTool());
 app.registerTool(new SelectTool());
+app.registerTool(new PenTool());
 app.registerTool(new BlurTool());
 app.registerTool(new ClearTool());
 app.registerTool(new ExportTool());
 
 // Populate toolbox with registered tools
-// Hide Zoom tool if alwaysEnablePanZoom is enabled
-const hiddenTools = alwaysEnablePanZoom ? ['zoom'] : [];
-app.uiManager.populateToolbox(app.pluginSystem.getAllTools(), hiddenTools);
+app.uiManager.populateToolbox(app.pluginSystem.getAllTools());
 
-// Set default tool
-if (alwaysEnablePanZoom) {
-  // Start with Select tool when pan/zoom is always enabled
-  app.setTool('select');
-} else {
-  // Start with Zoom tool when it's a separate tool
-  app.setTool('zoom');
-}
+// Set default tool to Select
+app.setTool('select');
 
 // -----------------------------------------------------------------
 // Setup Image Loading

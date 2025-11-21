@@ -118,6 +118,8 @@ export class UIManager extends EventEmitter {
         return this.createButton(option, tool, wrapper);
       case 'text':
         return this.createTextInput(option, tool, wrapper);
+      case 'color':
+        return this.createColorInput(option, tool, wrapper);
       default:
         return null;
     }
@@ -254,10 +256,42 @@ export class UIManager extends EventEmitter {
   }
 
   /**
+   * Create color input control
+   * @private
+   */
+  createColorInput(option, tool, wrapper) {
+    const label = document.createElement('label');
+    label.textContent = option.label;
+
+    const input = document.createElement('input');
+    input.type = 'color';
+    input.value = option.value;
+    input.style.width = '100%';
+    input.style.height = '40px';
+    input.style.cursor = 'pointer';
+
+    // Add tooltip if description provided
+    if (option.description) {
+      input.title = option.description;
+      label.title = option.description;
+    }
+
+    input.addEventListener('input', (e) => {
+      tool.updateOptions({ [option.name]: e.target.value });
+    });
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(input);
+
+    return wrapper;
+  }
+
+  /**
    * Update history panel
    * @param {Array} history - History items
+   * @param {Function} onJumpTo - Optional callback when history item is clicked
    */
-  updateHistoryPanel(history) {
+  updateHistoryPanel(history, onJumpTo = null) {
     if (!this.historyContainer) return;
 
     this.historyContainer.innerHTML = '';
@@ -276,6 +310,16 @@ export class UIManager extends EventEmitter {
       li.className = 'history-item';
       if (item.isCurrent) {
         li.classList.add('current');
+      }
+
+      // Make history items clickable
+      li.style.cursor = 'pointer';
+      li.title = `Click to revert to: ${item.description}`;
+
+      if (onJumpTo) {
+        li.addEventListener('click', () => {
+          onJumpTo(item.index);
+        });
       }
 
       const description = document.createElement('span');
