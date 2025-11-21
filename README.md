@@ -1,6 +1,6 @@
 # Image Cleaner - 9-Slice Preparation Tool
 
-A powerful web-based image editor for preparing pixel art UI components for 9-slice scaling. Built with vanilla JavaScript, no external dependencies except panner-zoomer.
+A powerful web-based image editor for preparing pixel art UI components for 9-slice scaling. Built with vanilla JavaScript, no external 3rd party dependencies.
 
 ## Features
 

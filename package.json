@@ -1,17 +1,92 @@
 {
   "name": "image-cleaner",
   "version": "1.0.0",
-  "description": "",
+  "description": "Professional web-based image editor for pixel art and UI graphics. Smart multi-marker selection with boolean operations, global color range selection, Gaussian blur, transparency tools. Perfect for preparing Midjourney pixel art for 9-slice scaling. Pure vanilla JavaScript with zero framework dependencies.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "save": "git add .; git commit -m 'Updated Release'; npm version patch; npm publish; git push --follow-tags;",
     "server": "http-server -c-1 -o .",
+    "start": "http-server -c-1 -o .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "keywords": [
+    "image-editor",
+    "pixel-art",
+    "9-slice",
+    "midjourney",
+    "selection-tool",
+    "image-processing",
+    "transparency",
+    "background-removal",
+    "gaussian-blur",
+    "vanilla-javascript",
+    "ui-graphics",
+    "game-assets",
+    "sprite-editor",
+    "web-app",
+    "canvas-editor",
+    "color-selection",
+    "flood-fill",
+    "boolean-operations",
+    "selection-arithmetic",
+    "png-editor",
+    "alpha-channel",
+    "image-cleanup",
+    "retro-graphics",
+    "no-dependencies",
+    "es6-modules",
+    "open-source"
+  ],
+  "files": [
+    "index.html",
+    "index.js",
+    "styles.css",
+    "modules/",
+    "node_modules/panner-zoomer/",
+    "README.md",
+    "LICENSE",
+    "USAGE.md",
+    "example.png"
+  ],
+
   "dependencies": {
     "panner-zoomer": "^1.0.2"
   },
-  "type": "module"
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "author": {
+    "name": "catpea",
+    "url": "https://github.com/catpea"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catpea/image-cleaner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/catpea/image-cleaner/issues"
+  },
+  "homepage": "https://catpea.github.io/image-cleaner",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/catpea"
+  },
+  "browser": true,
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "contributors": [
+    {
+      "name": "Claude (Anthropic)",
+      "url": "https://claude.ai"
+    }
+  ]
 }
