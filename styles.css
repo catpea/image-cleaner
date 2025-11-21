@@ -1,0 +1,403 @@
+/* -----------------------------------------------------------------
+   Image Cleaner - Stylesheet
+   Lightweight layout for image editing tool
+   ----------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent: #0078d4;
+  --accent-hover: #106ebe;
+  --border: #404040;
+  --success: #107c10;
+  --error: #e81123;
+  --selection: rgba(0, 120, 212, 0.3);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* -----------------------------------------------------------------
+   Layout
+   ----------------------------------------------------------------- */
+
+.app-container {
+  display: grid;
+  grid-template-columns: 200px 1fr 250px;
+  grid-template-rows: 50px 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  grid-column: 1 / -1;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.header-controls {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.sidebar-left {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.canvas-area {
+  position: relative;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.sidebar-right {
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* -----------------------------------------------------------------
+   Toolbox
+   ----------------------------------------------------------------- */
+
+.toolbox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbox h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.tool-button {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, border-color 0.2s;
+  text-align: left;
+}
+
+.tool-button:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent);
+}
+
+.tool-button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* -----------------------------------------------------------------
+   Options Panel
+   ----------------------------------------------------------------- */
+
+.options-panel h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.option-control {
+  margin-bottom: 15px;
+}
+
+.option-control label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+}
+
+.option-control input[type="range"] {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.option-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.option-control input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+.slider-value {
+  float: right;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.option-control input[type="text"] {
+  width: 100%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.option-control input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.action-button {
+  width: 100%;
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-weight: 600;
+}
+
+.action-button:hover {
+  background: var(--accent-hover);
+}
+
+.action-button:active {
+  transform: translateY(1px);
+}
+
+/* -----------------------------------------------------------------
+   History Panel
+   ----------------------------------------------------------------- */
+
+.history-panel h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.history-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.history-controls button {
+  flex: 1;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.history-controls button:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent);
+}
+
+.history-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.history-list {
+  list-style: none;
+  font-size: 12px;
+}
+
+.history-item {
+  padding: 8px;
+  margin-bottom: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-item.current {
+  border-color: var(--accent);
+  background: rgba(0, 120, 212, 0.1);
+}
+
+.history-time {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+/* -----------------------------------------------------------------
+   Canvas Area
+   ----------------------------------------------------------------- */
+
+panner-zoomer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+}
+
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* -----------------------------------------------------------------
+   Header Controls
+   ----------------------------------------------------------------- */
+
+.load-image-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.load-image-btn:hover {
+  background: var(--accent-hover);
+}
+
+#image-input {
+  display: none;
+}
+
+/* -----------------------------------------------------------------
+   Notifications
+   ----------------------------------------------------------------- */
+
+.notification {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1000;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification-success {
+  border-left: 3px solid var(--success);
+}
+
+.notification-error {
+  border-left: 3px solid var(--error);
+}
+
+.notification-info {
+  border-left: 3px solid var(--accent);
+}
+
+/* -----------------------------------------------------------------
+   Scrollbar
+   ----------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
+}

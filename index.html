@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Cleaner - 9-Slice Preparation Tool</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "panner-zoomer": "./node_modules/panner-zoomer/panner-zoomer.js"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Image Cleaner</h1>
+      <div class="header-controls">
+        <button class="load-image-btn" id="load-image-btn">Load Image</button>
+        <input type="file" id="image-input" accept="image/*">
+      </div>
+    </div>
+
+    <!-- Left Sidebar - Toolbox -->
+    <div class="sidebar-left">
+      <div class="toolbox" id="toolbox">
+        <h2>Tools</h2>
+        <!-- Tools will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Canvas Area -->
+    <div class="canvas-area">
+      <panner-zoomer id="pz">
+        <canvas id="main-canvas" style="position: absolute;"></canvas>
+        <canvas id="overlay-canvas" style="position: absolute; pointer-events: none;"></canvas>
+      </panner-zoomer>
+    </div>
+
+    <!-- Right Sidebar - Options & History -->
+    <div class="sidebar-right">
+      <!-- Options Panel -->
+      <div class="options-panel" id="options-panel">
+        <h3>Tool Options</h3>
+        <p style="color: var(--text-secondary); font-size: 13px;">Select a tool to see options</p>
+      </div>
+
+      <!-- History Panel -->
+      <div class="history-panel" id="history-panel">
+        <!-- History will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application Script -->
+  <script type="module" src="index.js"></script>
+
+</body>
+</html>

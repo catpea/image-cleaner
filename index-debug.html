@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Cleaner - Debug Mode (No Panner-Zoomer)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Image Cleaner - DEBUG MODE</h1>
+      <div class="header-controls">
+        <button class="load-image-btn" id="load-image-btn">Load Image</button>
+        <input type="file" id="image-input" accept="image/*">
+      </div>
+    </div>
+
+    <!-- Left Sidebar - Toolbox -->
+    <div class="sidebar-left">
+      <div class="toolbox" id="toolbox">
+        <h2>Tools</h2>
+        <!-- Tools will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Canvas Area - NO PANNER-ZOOMER -->
+    <div class="canvas-area" id="canvas-container" style="position: relative; overflow: auto;">
+      <canvas id="main-canvas" style="position: absolute; top: 0; left: 0;"></canvas>
+      <canvas id="overlay-canvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+    </div>
+
+    <!-- Right Sidebar - Options & History -->
+    <div class="sidebar-right">
+      <!-- Options Panel -->
+      <div class="options-panel" id="options-panel">
+        <h3>Tool Options</h3>
+        <p style="color: var(--text-secondary); font-size: 13px;">Select a tool to see options</p>
+      </div>
+
+      <!-- History Panel -->
+      <div class="history-panel" id="history-panel">
+        <!-- History will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug Console -->
+  <div id="debug-console" style="position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #0f0; font-family: monospace; font-size: 11px; padding: 10px; max-height: 150px; overflow-y: auto; z-index: 10000;">
+    <div id="debug-output">Debug console ready...</div>
+  </div>
+
+  <!-- Main Application Script -->
+  <script type="module" src="index-debug.js"></script>
+
+</body>
+</html>
